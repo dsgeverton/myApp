@@ -17,11 +17,28 @@ export class MovieProvider {
   }
 
   getLatestsMovies() {
-    return this.http.get(this.base_api_path + "movie/latest?api_key=" + this.api_key);
+    return new Promise( resolve => {
+      this.http.get(this.base_api_path + "movie/latest?api_key=" + this.api_key)
+      .subscribe(data => {
+        resolve(data);
+        console.log("Promisse result: ");
+        console.log(data);
+      }, err => {
+        console.log(err);
+      });
+    }); 
   }
 
   getPopularMovies() {
-    return this.http.get(this.base_api_path + "movie/popular?api_key=" + this.api_key);
+    return new Promise( resolve => {
+      this.http.get(this.base_api_path + "movie/popular?api_key=" + this.api_key)
+      .subscribe(data => {
+        resolve(data);
+        console.log("Promisse result: ");
+        console.log(data);
+      }, err => {
+        console.log(err);
+      });
+    });
   }
-
 }

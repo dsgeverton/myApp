@@ -100,7 +100,13 @@ export class FeedPage {
 
   }
 
-  presentLoadingDefault() {
+  ionViewDidEnter() {
+    this.abrirLoading();
+    this.carregarFilmes();   
+    this.fecharLoading();
+  }
+
+  abrirLoading() {
     this.loading = this.loadingCtrl.create({
       content: 'Carregando Filmes...'
     }); 
@@ -112,24 +118,23 @@ export class FeedPage {
     this.loading.dismiss();
   }
 
-  ionViewDidEnter() {
-    this.presentLoadingDefault();
-    this.carregarFilmes();   
-    this.fecharLoading();
-
-
-  }
-
   public carregarFilmes() {
-    this.movieProvider.getPopularMovies().subscribe(
-      data => {
-        this.movie = data;
-        this.lista_filmes = this.movie.results;
-        console.log(this.lista_filmes[0]);
-      }, error => {
-        console.log(error);
-      }
-    )
+    this.movieProvider.getPopularMovies()
+    .then(data => {
+      this.movie = data;
+      this.lista_filmes = this.movie.results;
+    })
+   
+   
+    // this.movieProvider.getPopularMovies().subscribe(
+    //   data => {
+    //     this.movie = data;
+    //     this.lista_filmes = this.movie.results;
+    //     console.log(this.lista_filmes[0]);
+    //   }, error => {
+    //     console.log(error);
+    //   }
+    // )
     if (this.isRefreshing) {
       this.refresher.complete();
       this.isRefreshing = false;

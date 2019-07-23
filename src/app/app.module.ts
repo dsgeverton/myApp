@@ -18,6 +18,7 @@ import { ConfigProvider } from '../providers/config/config';
 import { ConfiguracoesPageModule } from '../pages/configuracoes/configuracoes.module';
 import { PerfilPageModule } from '../pages/perfil/perfil.module';
 import { SobrePageModule } from '../pages/sobre/sobre.module';
+import { RoundProgressModule } from 'angular5-svg-round-progressbar';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,10 @@ import { SobrePageModule } from '../pages/sobre/sobre.module';
     ConfiguracoesPageModule,
     SobrePageModule,
     PerfilPageModule,
-    IonicModule.forRoot(MyApp)
+    RoundProgressModule,
+    IonicModule.forRoot(MyApp, {
+      backButtonText: ''
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
