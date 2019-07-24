@@ -223,7 +223,7 @@ export class FeedPage {
   }
 
   abrirDetalhes(movie) {
-    this.navCtrl.push(FeedDetalhesPage, {movie: movie});
+    this.navCtrl.push(FeedDetalhesPage, { movieId: movie.id });
   }
 
 }

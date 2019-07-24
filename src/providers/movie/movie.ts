@@ -11,17 +11,18 @@ import { Injectable } from '@angular/core';
 export class MovieProvider {
 
   public base_api_path:string = "https://api.themoviedb.org/3/";
-  public api_key:string = "be41082f28068797c65c559d00c85888";
+  public lang:string = "pt-BR";
+
   constructor(public http: HttpClient) {
     console.log('Hello MovieProvider Provider');
   }
 
   getLatestsMovies() {
     return new Promise( resolve => {
-      this.http.get(this.base_api_path + "movie/latest?api_key=" + this.api_key)
+      this.http.get(this.base_api_path + "movie/latest?api_key=" + this.getApiKey())
       .subscribe(data => {
         resolve(data);
-        console.log("Promisse result: ");
+        console.log("Promisse 'getLatestsMovies' result: ");
         console.log(data);
       }, err => {
         console.log(err);
@@ -31,14 +32,31 @@ export class MovieProvider {
 
   getPopularMovies() {
     return new Promise( resolve => {
-      this.http.get(this.base_api_path + "movie/popular?api_key=" + this.api_key)
+      this.http.get(this.base_api_path + "movie/popular?api_key=" + this.getApiKey() + "&language=" + this.lang)
       .subscribe(data => {
         resolve(data);
-        console.log("Promisse result: ");
+        console.log("Promisse 'getPopularMovies' result: ");
         console.log(data);
       }, err => {
         console.log(err);
       });
     });
+  }
+
+  getMovieDetails(movieId) {
+    return new Promise( resolve => {
+      this.http.get(this.base_api_path + `movie/${movieId}?api_key=` + this.getApiKey() + "&language=" + this.lang)
+      .subscribe(data => {
+        resolve(data);
+        console.log("Promisse 'getMovieDetails' result: ");
+        console.log(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
+  getApiKey():string {
+    return "be41082f28068797c65c559d00c85888";
   }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { MovieProvider } from '../../providers/movie/movie';
 
 /**
  * Generated class for the FeedDetalhesPage page.
@@ -12,17 +13,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 @Component({
   selector: 'page-feed-detalhes',
   templateUrl: 'feed-detalhes.html',
+  providers: [
+    MovieProvider
+  ]
 })
 export class FeedDetalhesPage {
-  public movie_img_base_path = "https://image.tmdb.org/t/p/w500/";
+  public movie_img_base_path = "https://image.tmdb.org/t/p/w500";
   public movie: any;
+  public movieId;
+  public generos: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    public movieProvider: MovieProvider) {
   }
 
   ionViewDidEnter() {
-    this.movie = this.navParams.get("movie");
-    console.log(this.movie);
+    this.movieId = this.navParams.get("movieId");
+    console.log(this.movieId);
+    this.movieProvider.getMovieDetails(this.movieId).then(data => {
+      this.movie = data;
+      this.generos = this.movie.genres;
+      this.movie.vote_average *= 10;
+    });
   }
 
 }

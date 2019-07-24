@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>FeedDetalhes</ion-title>
+    <ion-title>Detalhes do Filme</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -18,30 +18,41 @@
 
     <ion-card-content>
       <ion-card-title>
-        {{ movie.original_title }}
+        {{ movie.title }}
       </ion-card-title>
       <p> {{ movie.overview }} </p>
     </ion-card-content>
 
     <ion-item>
-      <ion-icon name='musical-notes' item-start style="color: #d03e84"></ion-icon>
-      Albums
-      <ion-badge item-end>9</ion-badge>
-      
+      <ion-icon name="ios-recording-outline" item-start></ion-icon>
+      Generos
+      <!-- <ion-badge item-end>260k</ion-badge> -->
     </ion-item>
-
-    <ion-item>
-      <ion-icon name='logo-twitter' item-start style="color: #55acee"></ion-icon>
-      Followers
-      <ion-badge item-end>260k</ion-badge>
-    </ion-item>
-
+    <ion-row col-auto >
+      <ion-col>
+        <button *ngFor="let genero of generos" ion-button danger round small>{{ genero.name }}</button>
+      </ion-col>
+    </ion-row>
     <ion-item>
       <ion-range min="0" max="100" [(ngModel)]="saturation" color="secondary"></ion-range>
       <ion-badge item-end>{{ movie.vote_count }}</ion-badge>
     </ion-item>
-
     
+    <circle-progress
+    [percent]= movie.vote_average
+    [radius]="50"
+    [units]="Rate"
+    [showUnits]="true"
+    [showTitle]="true"
+    [showSubtitle] ="false"
+    [outerStrokeWidth]="10"
+    [innerStrokeWidth]="5"
+    [outerStrokeColor]="'#78C000'"
+    [innerStrokeColor]="'#C7E596'"
+    [animation]="false"
+    [animationDuration]="300"
+    ></circle-progress>
   </ion-card>
-    
+
+
 </ion-content>
