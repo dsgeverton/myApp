@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MovieProvider } from '../../providers/movie/movie';
 
 /**
@@ -19,22 +19,44 @@ import { MovieProvider } from '../../providers/movie/movie';
 })
 export class FeedDetalhesPage {
   public movie_img_base_path = "https://image.tmdb.org/t/p/w500";
-  public movie: any;
-  public movieId;
+  private movie: any;
+  private movieId;
   public generos: any;
+  
+  private loading: any;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
-    public movieProvider: MovieProvider) {
+    public movieProvider: MovieProvider,
+    private loadingCtrl: LoadingController) {
   }
 
   ionViewDidEnter() {
     this.movieId = this.navParams.get("movieId");
     console.log(this.movieId);
+    this.openLoading();
+    this.loadMovie();
+    this.closeLoading();
+    
+  }
+
+  openLoading() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Carregando Filmes...'
+    }); 
+  
+    this.loading.present();
+  }
+
+  closeLoading() {
+    this.loading.dismiss();
+  }
+
+  loadMovie() {
     this.movieProvider.getMovieDetails(this.movieId).then(data => {
       this.movie = data;
-      this.generos = this.movie.genres;
       this.movie.vote_average *= 10;
+      this.generos = this.movie.genres;
     });
   }
 

@@ -14,7 +14,7 @@ import { ConfigProvider } from '../providers/config/config';
   ]
 })
 export class MyApp {
-  rootPage:any = IntroPage;
+  rootPage:any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, configProvider: ConfigProvider) {
     platform.ready().then(() => {
